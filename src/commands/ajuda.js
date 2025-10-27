@@ -1,0 +1,26 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('ajuda')
+        .setDescription('Mostra todos os comandos disponíveis'),
+
+    async execute(interaction) {
+        const helpEmbed = new EmbedBuilder()
+            .setColor(0x0099FF)
+            .setTitle('📚 Comandos Disponíveis')
+            .setDescription('Lista de todos os comandos que você pode usar:')
+            .addFields(
+                { name: '/entrar', value: 'Entra no canal de voz e inicia a gravação' },
+                { name: '/sair', value: 'Sai do canal de voz e encerra a gravação' },
+                { name: '/enviar', value: 'Envia o arquivo de transcrição atual' },
+                { name: '/ajuda', value: 'Mostra esta mensagem de ajuda' }
+            )
+            .setFooter({ text: 'INBot - Bot de Transcrição de Voz' });
+
+        await interaction.reply({
+            embeds: [helpEmbed],
+            ephemeral: true
+        });
+    },
+};
