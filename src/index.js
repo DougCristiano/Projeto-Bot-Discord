@@ -35,7 +35,7 @@ client.recordingSessions = new Collection();
 // Configuração do reconhecimento de voz
 addSpeechEvent(client, {
     lang: 'pt-BR',
-    profanityFilter: true
+    profanityFilter: false
 });
 
 // Carrega todos os comandos

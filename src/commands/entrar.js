@@ -4,7 +4,7 @@ const { joinVoiceChannel, VoiceConnectionStatus, entersState } = require('@disco
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('entrar')
-        .setDescription('Entra no canal de voz e inicia a gravação'),
+        .setDescription('Entrando no canal de voz e inicia a gravação'),
 
     async execute(interaction, client) {
         const channel = interaction.member?.voice.channel;
