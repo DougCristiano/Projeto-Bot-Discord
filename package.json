@@ -13,9 +13,11 @@
   "dependencies": {
     "@discordjs/opus": "^0.10.0",
     "@discordjs/voice": "^0.19.0",
+    "@snazzah/davey": "^0.1.7",
     "discord-speech-recognition": "^3.4.1",
     "discord.js": "^14.24.0",
     "dotenv": "^17.2.3",
-    "libsodium-wrappers": "^0.7.15"
+    "libsodium-wrappers": "^0.7.15",
+    "package": "^1.0.1"
   }
 }
