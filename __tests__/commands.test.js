@@ -37,9 +37,7 @@ const mockInteraction = (options = {}) => ({
 	guild: mockGuild,
 	options: {
 		getString: jest.fn((name) => options[name] || null),
-		getFocused: jest.fn((detailed) =>
-			detailed ? { name: 'canal', value: '' } : ''
-		), // Para autocomplete
+		getFocused: jest.fn((detailed) => (detailed ? { name: 'canal', value: '' } : '')), // Para autocomplete
 	},
 	reply: jest.fn().mockResolvedValue(undefined),
 	deferReply: jest.fn().mockResolvedValue(undefined),
@@ -103,14 +101,12 @@ describe('Comando /logs_voz - FUNCIONALIDADES', () => {
 	describe('Execução - Sem Logs Existentes', () => {
 		test('deve responder quando não há nenhum log registrado', async () => {
 			const interaction = mockInteraction()
-			
+
 			// Como não há logs de teste, o comando deve responder
 			await logsCommand.execute(interaction)
 
 			// Deve ter chamado deferReply ou editReply
-			expect(
-				interaction.deferReply.mock.calls.length + interaction.editReply.mock.calls.length
-			).toBeGreaterThan(0)
+			expect(interaction.deferReply.mock.calls.length + interaction.editReply.mock.calls.length).toBeGreaterThan(0)
 		})
 	})
 
@@ -150,9 +146,7 @@ describe('Comando /logs_voz - FUNCIONALIDADES', () => {
 			await logsCommand.execute(interaction)
 
 			// Deve ter processado a interação
-			expect(
-				interaction.deferReply.mock.calls.length + interaction.editReply.mock.calls.length
-			).toBeGreaterThan(0)
+			expect(interaction.deferReply.mock.calls.length + interaction.editReply.mock.calls.length).toBeGreaterThan(0)
 		})
 
 		test('deve FILTRAR logs por canal específico', async () => {
