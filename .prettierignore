@@ -24,3 +24,6 @@ build/
 # Arquivos de configuração do sistema
 package-lock.json
 *.log
+
+# GitHub Workflows (YAML usa espaços)
+.github/
