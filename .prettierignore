@@ -1,0 +1,26 @@
+# Dependências
+node_modules/
+
+# Logs
+logs/
+logs_console/
+src/logs_voz/
+
+# Transcrições
+transcricoes/
+src/transcricoes/
+
+# Arquivos de build
+dist/
+build/
+
+# Arquivos do PM2
+.pm2/
+
+# Arquivos de ambiente
+.env
+.env.*
+
+# Arquivos de configuração do sistema
+package-lock.json
+*.log

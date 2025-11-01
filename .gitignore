@@ -5,7 +5,7 @@ node_modules
 src/logs_voz/
 
 # Logs do console
-logs_console/
+logs/
 
 # Transcrições
 transcricoes/

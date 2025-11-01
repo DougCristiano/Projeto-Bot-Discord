@@ -5,11 +5,13 @@ O PM2 é um gerenciador de processos Node.js que garante que o bot continue roda
 ## 📋 Instalação
 
 ### 1. Instalar PM2 globalmente
+
 ```bash
 npm install -g pm2
 ```
 
 ### 2. Configurar PM2 para iniciar na reboot do servidor
+
 ```bash
 pm2 startup
 pm2 save
@@ -18,6 +20,7 @@ pm2 save
 ## 🎮 Comandos Principais
 
 ### Iniciar o bot
+
 ```bash
 npm start
 # ou
@@ -27,6 +30,7 @@ pm2 start ecosystem.config.js
 ```
 
 ### Parar o bot
+
 ```bash
 npm stop
 # ou
@@ -36,6 +40,7 @@ pm2 stop inbot
 ```
 
 ### Reiniciar o bot
+
 ```bash
 npm restart
 # ou
@@ -45,6 +50,7 @@ pm2 restart inbot
 ```
 
 ### Ver logs em tempo real
+
 ```bash
 npm run logs
 # ou
@@ -54,6 +60,7 @@ pm2 logs inbot
 ```
 
 ### Monitorar em tempo real
+
 ```bash
 npm run monit
 # ou
@@ -61,16 +68,19 @@ pm2 monit
 ```
 
 ### Ver lista de processos
+
 ```bash
 pm2 list
 ```
 
 ### Ver informações detalhadas
+
 ```bash
 pm2 info inbot
 ```
 
 ### Deletar o bot do PM2
+
 ```bash
 pm2 delete inbot
 ```
@@ -87,8 +97,8 @@ O arquivo `ecosystem.config.js` contém as configurações:
 - **autorestart**: Reinicia automaticamente se cair
 - **max_restarts**: Máximo de restarts (10)
 - **min_uptime**: Tempo mínimo para considerar como "iniciado com sucesso" (10s)
-- **out_file**: Arquivo de saída (logs_console/pm2-out.log)
-- **error_file**: Arquivo de erros (logs_console/pm2-err.log)
+- **out_file**: Arquivo de saída (logs/pm2-out.log)
+- **error_file**: Arquivo de erros (logs/pm2-err.log)
 
 ## 📊 Workflow Completo
 
@@ -135,16 +145,19 @@ npm stop
 ## 🔄 Auto-restart na reboot do servidor
 
 Depois de executar `pm2 startup` e `pm2 save`, o PM2 vai:
+
 - ✅ Salvar a lista de processos
 - ✅ Criar um script de inicialização do sistema
 - ✅ Reiniciar o bot automaticamente quando o servidor reiniciar
 
 ### Verificar se está configurado
+
 ```bash
 pm2 startup
 ```
 
 ### Remover auto-startup
+
 ```bash
 pm2 unstartup
 ```
@@ -152,10 +165,12 @@ pm2 unstartup
 ## 📁 Logs
 
 Os logs são salvos em:
-- **Saída padrão**: `logs_console/pm2-out.log`
-- **Erros**: `logs_console/pm2-err.log`
+
+- **Saída padrão**: `logs/pm2-out.log`
+- **Erros**: `logs/pm2-err.log`
 
 Você também pode ver os logs em tempo real:
+
 ```bash
 pm2 logs inbot
 pm2 logs inbot --lines 100  # Últimas 100 linhas
@@ -164,6 +179,7 @@ pm2 logs inbot --lines 100  # Últimas 100 linhas
 ## 🛡️ Resiliência
 
 Com a configuração atual:
+
 - Se o bot cair, PM2 o reinicia automaticamente
 - Se reiniciar mais de 10 vezes em pouco tempo, para para não entrar em loop
 - Se usar mais de 500MB de RAM, é reiniciado

@@ -5,6 +5,7 @@
 Ao usar o parâmetro `canal`, o Discord mostrará **automaticamente** todos os canais de voz disponíveis no servidor!
 
 ### Como usar o autocomplete:
+
 1. Digite `/logs_voz`
 2. Clique no campo `canal:`
 3. **Os canais aparecem automaticamente!** 🎉
@@ -16,33 +17,41 @@ Ao usar o parâmetro `canal`, o Discord mostrará **automaticamente** todos os c
 ## 📅 Exemplos de Uso do Comando `/logs_voz`
 
 ### 📅 Filtrar apenas por data
+
 ```
 /logs_voz data:2025-11-01
 ```
+
 Retorna: Todos os logs do dia 01/11/2025 de todos os canais
 
 ---
 
 ### 🎙️ Filtrar apenas por canal
+
 ```
 /logs_voz canal:Geral
 ```
+
 Retorna: Logs de hoje apenas do canal "Geral"
 
 ---
 
 ### 🎯 Filtrar por data E canal
+
 ```
 /logs_voz data:2025-11-01 canal:Reunião
 ```
+
 Retorna: Logs do dia 01/11/2025 apenas do canal "Reunião"
 
 ---
 
 ### 📊 Ver todos os logs de hoje
+
 ```
 /logs_voz
 ```
+
 Retorna: Todos os logs de hoje de todos os canais
 
 ---
@@ -54,12 +63,14 @@ O filtro de canal captura **todas** as atividades relacionadas ao canal especifi
 ### Exemplo: Filtro por canal "Geral"
 
 **Logs capturados:**
+
 - ✅ `🟢 Usuario#1234 entrou no canal: Geral`
 - ✅ `🔴 Usuario#5678 saiu do canal: Geral`
 - ✅ `🔄 Usuario#9012 mudou de Reunião para Geral`
 - ✅ `🔄 Usuario#3456 mudou de Geral para Reunião`
 
 **Logs NÃO capturados:**
+
 - ❌ `🟢 Usuario#7890 entrou no canal: Reunião`
 - ❌ `🔴 Usuario#4567 saiu do canal: Música`
 - ❌ `🔄 Usuario#2345 mudou de Reunião para Música`
@@ -97,10 +108,12 @@ O filtro de canal captura **todas** as atividades relacionadas ao canal especifi
 ## 📁 Arquivos Gerados
 
 ### Sem filtro de canal:
+
 - Arquivo: `2025-11-01_atividade_voz.txt`
 - Conteúdo: Todos os eventos de todos os canais
 
 ### Com filtro de canal:
+
 - Arquivo: `2025-11-01_Geral_atividade_voz.txt`
 - Conteúdo: Apenas eventos do canal "Geral"
 - Nota: Arquivo temporário, gerado sob demanda
