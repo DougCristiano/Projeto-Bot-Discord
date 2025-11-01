@@ -13,6 +13,7 @@ export default [
 			globals: {
 				...globals.node,
 				...globals.es2021,
+				...globals.jest,
 			},
 		},
 		rules: {
@@ -37,6 +38,7 @@ export default [
 			'src/transcricoes/',
 			'dist/',
 			'build/',
+			'coverage/',
 		],
 	},
 ]

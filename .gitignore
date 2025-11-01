@@ -11,3 +11,5 @@ logs/
 transcricoes/
 src/transcricoes/
 
+# Cobertura de testes
+coverage/
