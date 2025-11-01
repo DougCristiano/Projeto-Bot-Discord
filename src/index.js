@@ -58,6 +58,20 @@ async function loadCommands() {
 
 // Gerenciador de interações
 client.on(Events.InteractionCreate, async interaction => {
+    // Gerencia autocomplete
+    if (interaction.isAutocomplete()) {
+        const command = client.commands.get(interaction.commandName);
+        if (!command || !command.autocomplete) return;
+
+        try {
+            await command.autocomplete(interaction);
+        } catch (error) {
+            console.error('Erro no autocomplete:', error);
+        }
+        return;
+    }
+
+    // Gerencia comandos
     if (!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
@@ -98,6 +112,56 @@ client.on("speech", async (message) => {
         await fs.appendFile(session.fileName, text);
     } catch (error) {
         console.error('❌ Erro ao processar transcrição:', error);
+    }
+});
+
+// Gerenciador de atividades de canais de voz
+client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+    try {
+        const member = newState.member;
+        const now = new Date();
+        const timestamp = now.toISOString();
+        const dateStr = now.toISOString().split('T')[0];
+        
+        // Define o caminho do arquivo de log de voz (na pasta src)
+        const voiceLogDir = path.join(__dirname, 'logs_voz');
+        await fs.mkdir(voiceLogDir, { recursive: true });
+        const voiceLogFile = path.join(voiceLogDir, `${dateStr}_atividade_voz.txt`);
+        
+        // Define o caminho do arquivo de log do console (na raiz)
+        const consoleLogDir = path.join(__dirname, '..', 'logs_console');
+        await fs.mkdir(consoleLogDir, { recursive: true });
+        const consoleLogFile = path.join(consoleLogDir, `${dateStr}_console_voz.txt`);
+        
+        let logMessage = '';
+        let consoleMessage = '';
+        
+        // Usuário entrou em um canal de voz
+        if (!oldState.channel && newState.channel) {
+            logMessage = `[${timestamp}] 🟢 ${member.user.tag} entrou no canal: ${newState.channel.name}\n`;
+            consoleMessage = `[${timestamp}] 🟢 ${member.user.tag} entrou em ${newState.channel.name}`;
+            console.log(consoleMessage);
+        }
+        // Usuário saiu de um canal de voz
+        else if (oldState.channel && !newState.channel) {
+            logMessage = `[${timestamp}] 🔴 ${member.user.tag} saiu do canal: ${oldState.channel.name}\n`;
+            consoleMessage = `[${timestamp}] 🔴 ${member.user.tag} saiu de ${oldState.channel.name}`;
+            console.log(consoleMessage);
+        }
+        // Usuário mudou de canal
+        else if (oldState.channel && newState.channel && oldState.channel.id !== newState.channel.id) {
+            logMessage = `[${timestamp}] 🔄 ${member.user.tag} mudou de ${oldState.channel.name} para ${newState.channel.name}\n`;
+            consoleMessage = `[${timestamp}] 🔄 ${member.user.tag} mudou de ${oldState.channel.name} para ${newState.channel.name}`;
+            console.log(consoleMessage);
+        }
+        
+        // Salva os logs nos arquivos
+        if (logMessage) {
+            await fs.appendFile(voiceLogFile, logMessage);
+            await fs.appendFile(consoleLogFile, consoleMessage + '\n');
+        }
+    } catch (error) {
+        console.error('❌ Erro ao registrar atividade de voz:', error);
     }
 });
 

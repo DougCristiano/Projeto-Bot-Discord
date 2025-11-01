@@ -16,6 +16,10 @@ module.exports = {
             name: 'enviar',
             description: 'Envia o arquivo de transcrição atual',
         },
+        logs_voz: {
+            name: 'logs_voz',
+            description: 'Envia o arquivo de logs de atividade dos canais de voz',
+        },
         help: {
             name: 'ajuda',
             description: 'Mostra todos os comandos disponíveis',

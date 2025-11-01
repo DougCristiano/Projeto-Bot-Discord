@@ -14,6 +14,7 @@ module.exports = {
                 { name: '/entrar', value: 'Entra no canal de voz e inicia a gravação' },
                 { name: '/sair', value: 'Sai do canal de voz e encerra a gravação' },
                 { name: '/enviar', value: 'Envia o arquivo de transcrição atual' },
+                { name: '/logs_voz [data] [canal]', value: 'Envia os logs de entrada/saída dos canais de voz. Pode filtrar por data e/ou canal específico' },
                 { name: '/ajuda', value: 'Mostra esta mensagem de ajuda' }
             )
             .setFooter({ text: 'INBot - Bot de Transcrição de Voz' });
