@@ -71,8 +71,10 @@ Bot desenvolvido pela IN Junior para transcrição de áudio em canais de voz e 
 
 6. **Inicie o bot:**
    ```bash
-   node src/index.js
+   npm start
    ```
+   
+   Isso vai iniciar o bot com **PM2**, que garante que o bot continue rodando mesmo se o servidor reiniciar!
 
 ## 📚 Documentação
 
@@ -110,6 +112,16 @@ Guia focado em exemplos práticos:
 - ✨ Como usar o autocomplete de canais
 - 🔍 Como funciona a filtragem
 - 💡 Dicas e truques
+
+#### [PM2_GUIDE.md](./docs/PM2_GUIDE.md)
+**Guia completo para usar PM2 com INBot**
+
+Tudo sobre o gerenciador de processos PM2:
+- 🚀 Como instalar e configurar PM2
+- 📋 Comandos principais (start, stop, restart, logs)
+- ⚙️ Auto-restart na reboot do servidor
+- 📊 Monitoramento em tempo real
+- 💡 Melhores práticas
 
 ### 🗺️ Fluxo de Leitura Sugerido
 

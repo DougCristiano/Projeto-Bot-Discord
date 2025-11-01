@@ -120,44 +120,94 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     try {
         const member = newState.member;
         const now = new Date();
-        const timestamp = now.toISOString();
-        const dateStr = now.toISOString().split('T')[0];
         
-        // Define o caminho do arquivo de log de voz (na pasta src)
+        // Converte para o horário do Brasil (America/Sao_Paulo)
+        const timestamp = now.toLocaleString('pt-BR', { 
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        
+        const dateStr = now.toLocaleDateString('pt-BR', {
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').reverse().join('-'); // Formato YYYY-MM-DD
+        
+        // Define o caminho dos arquivos de log
         const voiceLogDir = path.join(__dirname, 'logs_voz');
         await fs.mkdir(voiceLogDir, { recursive: true });
-        const voiceLogFile = path.join(voiceLogDir, `${dateStr}_atividade_voz.txt`);
-        
-        // Define o caminho do arquivo de log do console (na raiz)
+        const jsonLogFile = path.join(voiceLogDir, `${dateStr}_atividade_voz.json`);
         const consoleLogDir = path.join(__dirname, '..', 'logs_console');
         await fs.mkdir(consoleLogDir, { recursive: true });
         const consoleLogFile = path.join(consoleLogDir, `${dateStr}_console_voz.txt`);
         
-        let logMessage = '';
+        let eventData = null;
         let consoleMessage = '';
         
         // Usuário entrou em um canal de voz
         if (!oldState.channel && newState.channel) {
-            logMessage = `[${timestamp}] 🟢 ${member.user.tag} entrou no canal: ${newState.channel.name}\n`;
+            eventData = {
+                timestamp: timestamp,
+                tipo: 'entrada',
+                usuario: member.user.tag,
+                usuarioId: member.user.id,
+                canal: newState.channel.name,
+                canalId: newState.channel.id
+            };
             consoleMessage = `[${timestamp}] 🟢 ${member.user.tag} entrou em ${newState.channel.name}`;
             console.log(consoleMessage);
         }
         // Usuário saiu de um canal de voz
         else if (oldState.channel && !newState.channel) {
-            logMessage = `[${timestamp}] 🔴 ${member.user.tag} saiu do canal: ${oldState.channel.name}\n`;
+            eventData = {
+                timestamp: timestamp,
+                tipo: 'saida',
+                usuario: member.user.tag,
+                usuarioId: member.user.id,
+                canal: oldState.channel.name,
+                canalId: oldState.channel.id
+            };
             consoleMessage = `[${timestamp}] 🔴 ${member.user.tag} saiu de ${oldState.channel.name}`;
             console.log(consoleMessage);
         }
         // Usuário mudou de canal
         else if (oldState.channel && newState.channel && oldState.channel.id !== newState.channel.id) {
-            logMessage = `[${timestamp}] 🔄 ${member.user.tag} mudou de ${oldState.channel.name} para ${newState.channel.name}\n`;
+            eventData = {
+                timestamp: timestamp,
+                tipo: 'mudanca',
+                usuario: member.user.tag,
+                usuarioId: member.user.id,
+                canalOrigem: oldState.channel.name,
+                canalOrigemId: oldState.channel.id,
+                canalDestino: newState.channel.name,
+                canalDestinoId: newState.channel.id
+            };
             consoleMessage = `[${timestamp}] 🔄 ${member.user.tag} mudou de ${oldState.channel.name} para ${newState.channel.name}`;
             console.log(consoleMessage);
         }
         
-        // Salva os logs nos arquivos
-        if (logMessage) {
-            await fs.appendFile(voiceLogFile, logMessage);
+        // Salva os logs
+        if (eventData) {
+            // Salva no arquivo JSON
+            let logs = [];
+            try {
+                const fileContent = await fs.readFile(jsonLogFile, 'utf-8');
+                logs = JSON.parse(fileContent);
+            } catch {
+                // Arquivo não existe ou está vazio, começar array novo
+            }
+            
+            logs.push(eventData);
+            await fs.writeFile(jsonLogFile, JSON.stringify(logs, null, 2));
+            
+            // Salva log do console
             await fs.appendFile(consoleLogFile, consoleMessage + '\n');
         }
     } catch (error) {

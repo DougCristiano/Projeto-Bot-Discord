@@ -21,36 +21,64 @@ O bot monitora e registra:
 
 ## 📁 Estrutura de Arquivos
 
-Os logs são salvos em duas localizações:
+Os logs são salvos em **formato JSON** para melhor filtragem e análise:
 
-### 1. Logs detalhados (pasta src)
+### 1. Logs estruturados (pasta src)
 ```
 src/logs_voz/
-  └── YYYY-MM-DD_atividade_voz.txt
+  ├── YYYY-MM-DD_atividade_voz.json (dados estruturados)
+  └── temp/ (arquivos temporários para envio)
 ```
 
 ### 2. Logs do console (raiz do projeto)
 ```
 logs_console/
-  └── YYYY-MM-DD_console_voz.txt
+  └── YYYY-MM-DD_console_voz.txt (mesmas mensagens do console)
 ```
 
 Exemplo: 
-- `src/logs_voz/2025-11-01_atividade_voz.txt` (logs completos)
-- `logs_console/2025-11-01_console_voz.txt` (mesmas mensagens do console)
+- `src/logs_voz/2025-11-01_atividade_voz.json` (dados JSON estruturados)
+- `logs_console/2025-11-01_console_voz.txt` (mensagens do console)
 
 ## 📝 Formato dos Logs
 
-Cada entrada no arquivo de log contém:
-```
-[TIMESTAMP] EMOJI USUARIO AÇÃO CANAL
+### Arquivo JSON (src/logs_voz/)
+```json
+[
+  {
+    "timestamp": "01/11/2025, 14:30:25",
+    "tipo": "entrada",
+    "usuario": "Usuario#1234",
+    "usuarioId": "123456789012345678",
+    "canal": "Geral",
+    "canalId": "987654321098765432"
+  },
+  {
+    "timestamp": "01/11/2025, 14:35:10",
+    "tipo": "mudanca",
+    "usuario": "Usuario#1234",
+    "usuarioId": "123456789012345678",
+    "canalOrigem": "Geral",
+    "canalOrigemId": "987654321098765432",
+    "canalDestino": "Reunião",
+    "canalDestinoId": "111222333444555666"
+  },
+  {
+    "timestamp": "01/11/2025, 15:00:00",
+    "tipo": "saida",
+    "usuario": "Usuario#1234",
+    "usuarioId": "123456789012345678",
+    "canal": "Reunião",
+    "canalId": "111222333444555666"
+  }
+]
 ```
 
-Exemplos:
+### Arquivo de Console (logs_console/)
 ```
-[2025-11-01T14:30:25.123Z] 🟢 Usuario#1234 entrou no canal: Geral
-[2025-11-01T14:35:10.456Z] 🔄 Usuario#1234 mudou de Geral para Reunião
-[2025-11-01T15:00:00.789Z] 🔴 Usuario#1234 saiu do canal: Reunião
+[01/11/2025, 14:30:25] 🟢 Usuario#1234 entrou em Geral
+[01/11/2025, 14:35:10] 🔄 Usuario#1234 mudou de Geral para Reunião
+[01/11/2025, 15:00:00] 🔴 Usuario#1234 saiu de Reunião
 ```
 
 ## 🎮 Comando de Consulta
@@ -94,9 +122,11 @@ O bot envia uma mensagem com estatísticas e o arquivo de log:
 ```
 
 **Notas sobre o filtro de canal:**
+
 - O filtro busca por todas as atividades relacionadas ao canal especificado
 - Inclui: entradas no canal, saídas do canal, e mudanças que envolvem o canal
-- Se filtrado, um arquivo temporário é criado com apenas os eventos do canal
+- **Agora muito mais preciso:** usa dados estruturados JSON em vez de busca em texto
+- Filtragem por ID de canal garante 100% de precisão
 
 ## 🚀 Como Usar
 

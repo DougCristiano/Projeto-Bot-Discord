@@ -12,8 +12,28 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
-# Executa o deploy dos comandos
-node src/deploy-commands.js
+# Instala as dependências (clean install)
+echo "📦 Instalando dependências..."
+if ! npm ci; then
+    echo ""
+    echo "❌ Erro ao instalar dependências!"
+    exit 1
+fi
+
+# Verifica se o PM2 está instalado
+if ! command -v pm2 &> /dev/null; then
+    echo "❌ Erro: PM2 não está instalado!"
+    echo "Instale com: npm install -g pm2"
+    exit 1
+fi
+
+# Executa o deploy dos comandos e captura erros
+if ! node src/deploy-commands.js; then
+    echo ""
+    echo "❌ Erro ao executar o deploy dos comandos!"
+    echo "Verifique se o arquivo .env está correto e se o Node.js está instalado."
+    exit 2
+fi
 
 echo ""
 echo "✅ Deploy concluído!"
@@ -30,5 +50,5 @@ echo "  • 🟢 Entradas em canais de voz"
 echo "  • 🔴 Saídas de canais de voz"
 echo "  • 🔄 Mudanças entre canais de voz"
 echo ""
-echo "📁 Os logs serão salvos em: src/logs_voz/"
+echo "📁 Os logs serão salvos em: logs_console/"
 echo ""

@@ -4,6 +4,13 @@
   "description": "Bot para usarmos no discord da IN",
   "main": "src/index.js",
   "scripts": {
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop inbot",
+    "restart": "pm2 restart inbot",
+    "logs": "pm2 logs inbot",
+    "monit": "pm2 monit",
+    "deploy": "node src/deploy-commands.js",
+    "dev": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
