@@ -1,5 +1,5 @@
 /**
- * Testes para o SISTEMA DE LOGGING de atividades de voz
+ * Testes para o SISTEMA DE LOGGING de atividades de voz Que legal, disse o Douglas!
  */
 
 const fs = require('fs')
