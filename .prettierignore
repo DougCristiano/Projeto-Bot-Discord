@@ -8,7 +8,6 @@ src/logs_voz/
 
 # Transcrições
 transcricoes/
-src/transcricoes/
 
 # Arquivos de build
 dist/

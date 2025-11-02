@@ -9,7 +9,6 @@ logs/
 
 # Transcrições
 transcricoes/
-src/transcricoes/
 
 # Cobertura de testes
 coverage/

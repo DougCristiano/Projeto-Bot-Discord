@@ -35,7 +35,6 @@ export default [
 			'logs_console/',
 			'src/logs_voz/',
 			'transcricoes/',
-			'src/transcricoes/',
 			'dist/',
 			'build/',
 			'coverage/',
