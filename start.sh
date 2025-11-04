@@ -1,51 +1,44 @@
 #!/bin/bash
 
-echo "🤖 Iniciando INBot com PM2..."
+echo "🚀 Iniciando o INBot com Docker..."
 echo ""
 
 # Verifica se o arquivo .env existe
 if [ ! -f .env ]; then
     echo "❌ Erro: Arquivo .env não encontrado!"
-    echo "Execute primeiro: ./deploy.sh"
+    echo "Crie um arquivo .env com as seguintes variáveis:"
+    echo "DISCORD_TOKEN=seu_token_aqui"
+    echo "CLIENT_ID=seu_client_id_aqui"
     exit 1
 fi
 
-# Verifica se o PM2 está instalado
-if ! command -v pm2 &> /dev/null; then
-    echo "❌ Erro: PM2 não está instalado!"
-    echo "Instale com: npm install -g pm2"
+# Verifica se o Docker está instalado
+if ! command -v docker &> /dev/null; then
+    echo "❌ Erro: Docker não está instalado!"
+    echo "Instale o Docker: https://docs.docker.com/get-docker/"
     exit 1
 fi
 
-# Para qualquer instância anterior do bot
-echo "Parando instâncias anteriores..."
-pm2 delete inbot 2>/dev/null || true
+# Verifica se o Docker Compose está instalado
+if ! command -v docker compose &> /dev/null && ! command -v docker-compose &> /dev/null; then
+    echo "❌ Erro: Docker Compose não está instalado!"
+    echo "Instale o Docker Compose: https://docs.docker.com/compose/install/"
+    exit 1
+fi
 
-# Inicia o bot com PM2
-echo "Iniciando o bot..."
-if pm2 start ecosystem.config.js; then
+# Inicia o container
+echo "🚀 Iniciando o bot..."
+if docker compose up -d || docker-compose up -d; then
     echo ""
     echo "✅ Bot iniciado com sucesso!"
     echo ""
-    echo "📊 Informações do processo:"
-    pm2 list
-    echo ""
-    echo "🔍 Para monitorar em tempo real:"
-    echo "   pm2 monit"
-    echo ""
-    echo "📝 Para ver os logs:"
-    echo "   pm2 logs inbot"
-    echo ""
-    echo "🛑 Para parar o bot:"
-    echo "   pm2 stop inbot"
-    echo ""
-    echo "🔄 Para reiniciar o bot:"
-    echo "   pm2 restart inbot"
-    echo ""
-    echo "⚙️ Para remover o bot do PM2:"
-    echo "   pm2 delete inbot"
-    echo ""
+    echo "📊 Comandos úteis:"
+    echo "  • Ver logs: ./logs.sh"
+    echo "  • Parar bot: ./stop.sh"
+    echo "  • Reiniciar bot: ./restart.sh"
+    echo "  • Ver status: docker compose ps"
 else
-    echo "❌ Erro ao iniciar o bot!"
+    echo ""
+    echo "❌ Erro ao iniciar o container!"
     exit 1
 fi

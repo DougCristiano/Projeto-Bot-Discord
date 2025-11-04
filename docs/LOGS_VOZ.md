@@ -26,10 +26,10 @@ O bot monitora e registra:
 
 Os logs são salvos em **formato JSON** para melhor filtragem e análise:
 
-### 1. Logs estruturados (pasta src)
+### 1. Logs estruturados (raiz do projeto)
 
 ```
-src/logs_voz/
+logs_voz/
   ├── YYYY-MM-DD_atividade_voz.json (dados estruturados)
   └── temp/ (arquivos temporários para envio)
 ```
@@ -43,12 +43,12 @@ logs/
 
 Exemplo:
 
-- `src/logs_voz/2025-11-01_atividade_voz.json` (dados JSON estruturados)
+- `logs_voz/2025-11-01_atividade_voz.json` (dados JSON estruturados)
 - `logs/2025-11-01_console_voz.txt` (mensagens do console)
 
 ## 📝 Formato dos Logs
 
-### Arquivo JSON (src/logs_voz/)
+### Arquivo JSON (logs_voz/)
 
 ```json
 [
@@ -181,7 +181,7 @@ O bot exibe as atividades em tempo real no console E salva essas mesmas mensagen
 [2025-11-01T15:00:00.789Z] 🔄 Usuario#9012 mudou de Geral para Reunião
 ```
 
-**Arquivo detalhado `src/logs_voz/YYYY-MM-DD_atividade_voz.txt`:**
+**Arquivo detalhado `logs_voz/YYYY-MM-DD_atividade_voz.json`:**
 
 ```
 [2025-11-01T14:30:25.123Z] 🟢 Usuario#1234 entrou no canal: Geral
@@ -197,7 +197,7 @@ O bot exibe as atividades em tempo real no console E salva essas mesmas mensagen
 4. Apenas atividades de voz são registradas (não registra mute/unmute, etc.)
 5. **Dois tipos de logs são gerados:**
    - `logs/` - Mesmas mensagens exibidas no console (na raiz)
-   - `src/logs_voz/` - Logs detalhados com formato completo
+   - `logs_voz/` - Logs detalhados com formato completo
 
 ## 🛠️ Solução de Problemas
 
@@ -211,4 +211,4 @@ O bot exibe as atividades em tempo real no console E salva essas mesmas mensagen
 
 - Certifique-se de ter executado o comando `/logs_voz` corretamente
 - Verifique se existem atividades registradas para a data solicitada
-- Confirme que a pasta `src/logs_voz` foi criada corretamente
+- Confirme que a pasta `logs_voz` foi criada corretamente

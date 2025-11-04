@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  inbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inbot-discord
+    restart: unless-stopped
+    
+    # Carrega variáveis de ambiente do arquivo .env
+    env_file:
+      - .env
+    
+    # Monta volumes para persistir dados
+    # IMPORTANTE: Estes volumes garantem que os arquivos salvos pelo bot
+    # sejam mantidos mesmo se o container for removido ou recriado
+    volumes:
+      # Persiste os logs de console (logs/*.txt)
+      - ./logs:/app/logs
+      
+      # Persiste as transcrições de áudio (transcricoes/*.txt)
+      - ./transcricoes:/app/transcricoes
+      
+      # Persiste os logs de atividade de voz (logs_voz/*.json)
+      - ./logs_voz:/app/logs_voz
+      
+      # Se quiser desenvolvimento com hot-reload, descomente a linha abaixo:
+      # - ./src:/app/src
+    
+    # Configurações de recursos (opcional, ajuste conforme necessário)
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # Configuração de logs do Docker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Rede (se precisar conectar com outros serviços)
+    networks:
+      - inbot-network
+
+networks:
+  inbot-network:
+    driver: bridge

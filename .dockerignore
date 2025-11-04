@@ -1,0 +1,62 @@
+# Dependências
+node_modules/
+npm-debug.log*
+
+# Arquivos de ambiente (serão passados via docker-compose)
+.env
+.env.local
+.env.*.local
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos de documentação
+README.md
+LICENSE
+docs/
+
+# Arquivos de CI/CD
+.github/
+.gitlab-ci.yml
+
+# Arquivos de log (serão criados dentro do container)
+logs/
+*.log
+
+# Transcrições (serão criadas dentro do container)
+transcricoes/
+
+# PM2 (não precisamos mais)
+ecosystem.config.js
+.pm2/
+
+# Testes
+__tests__/
+*.test.js
+jest.config.js
+coverage/
+
+# Scripts shell antigos (PM2)
+deploy.sh
+start.sh
+stop.sh
+restart.sh
+logs.sh
+
+# Linter e formatação
+.eslintrc*
+.prettierrc*
+eslint.config.mjs

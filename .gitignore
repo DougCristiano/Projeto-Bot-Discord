@@ -1,8 +1,9 @@
 node_modules
 .env
 
-# Logs de atividade de voz
-src/logs_voz/
+# Logs de atividade de voz (ignora conteúdo, mantém .gitkeep)
+logs_voz/*
+!logs_voz/.gitkeep
 
 # Logs do console
 logs/
@@ -12,3 +13,11 @@ transcricoes/
 
 # Cobertura de testes
 coverage/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Arquivos antigos do PM2
+*-pm2.sh.old
+ecosystem.config.js

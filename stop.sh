@@ -1,23 +1,11 @@
 #!/bin/bash
 
-echo "🛑 Parando INBot..."
-echo ""
+echo "🛑 Parando o INBot..."
 
-# Verifica se o PM2 está instalado
-if ! command -v pm2 &> /dev/null; then
-    echo "❌ Erro: PM2 não está instalado!"
-    exit 1
-fi
-
-# Para o bot
-if pm2 stop inbot; then
-    echo ""
+# Tenta com docker compose primeiro, depois docker-compose
+if docker compose down 2>/dev/null || docker-compose down 2>/dev/null; then
     echo "✅ Bot parado com sucesso!"
-    echo ""
-    echo "📊 Status atual:"
-    pm2 list
 else
     echo "❌ Erro ao parar o bot!"
-    echo "O bot pode não estar em execução."
     exit 1
 fi

@@ -30,11 +30,67 @@ Bot desenvolvido pela IN Junior para transcrição de áudio em canais de voz e 
 
 ### 📋 Pré-requisitos
 
+**Escolha uma das opções:**
+
+#### Opção 1: Com Docker (Recomendado) 🐳
+- Docker e Docker Compose instalados
+- Conta no Discord
+- Servidor Discord onde você tenha permissões de administrador
+
+#### Opção 2: Tradicional
 - Node.js (v16 ou superior)
 - Conta no Discord
 - Servidor Discord onde você tenha permissões de administrador
 
 ### 🔧 Instalação
+
+#### 🐳 Opção 1: Com Docker (Recomendado)
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/DougCristiano/Projeto-Bot-Discord.git
+   cd Projeto-Bot-Discord
+   ```
+
+2. **Configure o bot no Discord:**
+
+   📖 **[Siga o guia completo em COMO_CRIAR_BOT.md](./docs/COMO_CRIAR_BOT.md)**
+
+   Este guia contém instruções detalhadas sobre:
+   - Como criar o bot no Discord Developer Portal
+   - Como obter o TOKEN e CLIENT_ID
+   - Como configurar permissões e intents
+   - Como adicionar o bot ao servidor
+
+3. **Configure as variáveis de ambiente:**
+
+   Crie um arquivo `.env` com suas credenciais:
+
+   ```env
+   DISCORD_TOKEN=seu_token_aqui
+   CLIENT_ID=seu_client_id_aqui
+   ```
+
+4. **Faça o deploy com Docker:**
+
+   ```bash
+   ./deploy.sh
+   ```
+
+   **Pronto!** O bot está rodando em um container Docker isolado.
+
+   📖 **[Veja o guia completo do Docker em DOCKER_GUIDE.md](./DOCKER_GUIDE.md)**
+
+   **Comandos úteis:**
+   ```bash
+   ./logs.sh      # Ver logs em tempo real
+   ./restart.sh   # Reiniciar o bot
+   ./stop.sh      # Parar o bot
+   ./start.sh     # Iniciar o bot (se já foi feito deploy)
+   ```
+
+#### 💻 Opção 2: Instalação Tradicional
 
 1. **Clone o repositório:**
 
@@ -52,12 +108,6 @@ Bot desenvolvido pela IN Junior para transcrição de áudio em canais de voz e 
 3. **Configure o bot no Discord:**
 
    📖 **[Siga o guia completo em COMO_CRIAR_BOT.md](./docs/COMO_CRIAR_BOT.md)**
-
-   Este guia contém instruções detalhadas sobre:
-   - Como criar o bot no Discord Developer Portal
-   - Como obter o TOKEN e CLIENT_ID
-   - Como configurar permissões e intents
-   - Como adicionar o bot ao servidor
 
 4. **Configure as variáveis de ambiente:**
 
@@ -88,7 +138,19 @@ Bot desenvolvido pela IN Junior para transcrição de áudio em canais de voz e 
 
 ## 📚 Documentação
 
-### � Começando
+### 🚀 Começando
+
+#### [DOCKER_GUIDE.md](./DOCKER_GUIDE.md)
+
+**Guia completo para usar o INBot com Docker (Recomendado)**
+
+Aprenda tudo sobre a versão dockerizada:
+
+- 🐳 Como fazer deploy com Docker
+- 📋 Comandos úteis do Docker
+- 🔧 Desenvolvimento com containers
+- 🐛 Troubleshooting
+- 🚀 Deploy em produção
 
 #### [COMO_CRIAR_BOT.md](./docs/COMO_CRIAR_BOT.md)
 
@@ -147,23 +209,26 @@ Tudo sobre o gerenciador de processos PM2:
 
 1. Comece com [COMO_CRIAR_BOT.md](./docs/COMO_CRIAR_BOT.md)
 2. Configure o bot seguindo o guia passo a passo
-3. Teste os comandos básicos
-4. Leia [LOGS_VOZ.md](./docs/LOGS_VOZ.md) para entender os recursos
-5. Consulte [GUIA_FILTRO_CANAL.md](./docs/GUIA_FILTRO_CANAL.md) para exemplos práticos
+3. Use [DOCKER_GUIDE.md](./DOCKER_GUIDE.md) para deploy (recomendado) ou PM2
+4. Teste os comandos básicos
+5. Leia [LOGS_VOZ.md](./docs/LOGS_VOZ.md) para entender os recursos
+6. Consulte [GUIA_FILTRO_CANAL.md](./docs/GUIA_FILTRO_CANAL.md) para exemplos práticos
 
 **Para Usuários Experientes:**
 
+- Use [DOCKER_GUIDE.md](./DOCKER_GUIDE.md) para deploy rápido com Docker
 - Use [GUIA_FILTRO_CANAL.md](./docs/GUIA_FILTRO_CANAL.md) como referência rápida
 - Consulte [LOGS_VOZ.md](./docs/LOGS_VOZ.md) para detalhes técnicos
 
 ## 📁 Estrutura do Projeto
 
-```
+```text
 Projeto-Bot-Discord/
 ├── docs/                  # Documentação do projeto
 │   ├── COMO_CRIAR_BOT.md
 │   ├── GUIA_FILTRO_CANAL.md
-│   └── LOGS_VOZ.md
+│   ├── LOGS_VOZ.md
+│   └── PM2_GUIDE.md
 ├── src/
 │   ├── commands/          # Comandos do bot
 │   │   ├── ajuda.js
@@ -176,9 +241,19 @@ Projeto-Bot-Discord/
 │   ├── config.js          # Configurações do bot
 │   ├── deploy-commands.js # Script de registro de comandos
 │   └── index.js           # Arquivo principal
-├── logs/          # Logs do console
+├── logs/                  # Logs do console
+├── logs_voz/              # Logs de atividade de voz (JSON)
 ├── .env                   # Variáveis de ambiente (não versionado)
 ├── .env.example           # Exemplo de configuração
+├── Dockerfile             # Configuração Docker
+├── docker-compose.yml     # Orquestração Docker
+├── .dockerignore          # Arquivos ignorados no build
+├── deploy.sh              # Script de deploy
+├── start.sh               # Iniciar bot
+├── logs.sh                # Ver logs do container
+├── restart.sh             # Reiniciar container
+├── stop.sh                # Parar container
+├── DOCKER_GUIDE.md        # Guia completo do Docker
 ├── package.json
 └── README.md
 ```
@@ -202,7 +277,7 @@ Projeto-Bot-Discord/
 
 ### Monitorar atividades de voz
 
-```
+```bash
 /logs_voz                              # Logs de hoje
 /logs_voz canal:Geral                  # Apenas do canal "Geral"
 /logs_voz data:2025-11-01 canal:Música # Data e canal específicos
@@ -210,7 +285,7 @@ Projeto-Bot-Discord/
 
 ### Transcrever conversas
 
-```
+```bash
 /entrar    # Bot entra no seu canal de voz
            # Fale normalmente - tudo será transcrito
 /sair      # Bot sai e encerra a gravação

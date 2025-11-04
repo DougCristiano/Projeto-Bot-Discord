@@ -1,13 +1,15 @@
 #!/bin/bash
 
-echo "📝 Logs do INBot (PM2)"
+echo "📋 Visualizando logs do INBot..."
+echo "Pressione Ctrl+C para sair"
 echo ""
 
-# Verifica se o PM2 está instalado
-if ! command -v pm2 &> /dev/null; then
-    echo "❌ Erro: PM2 não está instalado!"
+# Tenta com docker compose primeiro, depois docker-compose
+if command -v docker compose &> /dev/null; then
+    docker compose logs -f --tail=100
+elif command -v docker-compose &> /dev/null; then
+    docker-compose logs -f --tail=100
+else
+    echo "❌ Docker Compose não encontrado!"
     exit 1
 fi
-
-# Mostra os logs do bot
-pm2 logs inbot

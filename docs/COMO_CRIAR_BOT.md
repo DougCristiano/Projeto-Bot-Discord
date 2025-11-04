@@ -176,7 +176,7 @@ Você verá:
 4. **Logs de voz funcionam?**
    - ✅ Entre em um canal de voz
    - ✅ Verifique se apareceu log no console do bot
-   - ✅ Verifique a pasta `logs/` e `src/logs_voz/`
+   - ✅ Verifique a pasta `logs/` e `logs_voz/`
 
 ---
 

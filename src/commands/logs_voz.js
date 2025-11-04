@@ -113,7 +113,7 @@ module.exports = {
 				.join('\n')
 
 			// Salva em arquivo temporário para enviar
-			const tempDir = path.join(__dirname, '..', 'logs_voz', 'temp')
+			const tempDir = path.join(__dirname, '..', '..', 'logs_voz', 'temp')
 			await fs.mkdir(tempDir, { recursive: true })
 
 			const fileName = channelFilter

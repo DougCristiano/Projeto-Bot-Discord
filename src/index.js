@@ -163,7 +163,7 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
 			.join('-') // Formato YYYY-MM-DD
 
 		// Define o caminho dos arquivos de log
-		const voiceLogDir = path.join(__dirname, 'logs_voz')
+		const voiceLogDir = path.join(__dirname, '..', 'logs_voz')
 		await fs.mkdir(voiceLogDir, { recursive: true })
 		const jsonLogFile = path.join(voiceLogDir, `${dateStr}_atividade_voz.json`)
 		const consoleLogDir = path.join(__dirname, '..', 'logs')
