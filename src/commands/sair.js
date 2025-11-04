@@ -16,6 +16,13 @@ module.exports = {
 			// Finaliza a sessão de gravação primeiro
 			const session = client.recordingSessions.get(interaction.guild.id)
 			if (session) {
+				// Para a gravação de áudio
+				if (session.audioRecorder) {
+					console.log('⏹️ Parando gravação de áudio...')
+					await session.audioRecorder.stopRecording()
+					await session.audioRecorder.cleanup()
+				}
+
 				// Importa e executa o comando enviar
 				const enviarCommand = require('./enviar')
 				await enviarCommand.execute(interaction, client, true)

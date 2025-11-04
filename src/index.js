@@ -118,7 +118,12 @@ client.on('speech', async (message) => {
 		let transcriptions = []
 		try {
 			const fileContent = await fs.readFile(session.fileName, 'utf-8')
-			transcriptions = JSON.parse(fileContent)
+			const parsedContent = JSON.parse(fileContent)
+			if (Array.isArray(parsedContent)) {
+				transcriptions = parsedContent
+			} else if (parsedContent && Array.isArray(parsedContent.transcricoes)) {
+				transcriptions = parsedContent.transcricoes
+			}
 		} catch {
 			// Arquivo não existe ou está vazio, começar array novo
 		}
@@ -126,7 +131,7 @@ client.on('speech', async (message) => {
 		// Adiciona a nova transcrição
 		transcriptions.push(transcriptionEntry)
 
-		// Salva as transcrições no arquivo em formato JSON
+		// Salva as transcrições no arquivo em formato JSON (array simples)
 		await fs.writeFile(session.fileName, JSON.stringify(transcriptions, null, 2))
 	} catch (error) {
 		console.error('❌ Erro ao processar transcrição:', error)
