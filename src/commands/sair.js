@@ -8,7 +8,7 @@ module.exports = {
 		if (!connection) {
 			return interaction.reply({
 				content: '❌ O bot não está em um canal de voz.',
-				ephemeral: true,
+				flags: 1 << 6,
 			})
 		}
 
@@ -27,13 +27,13 @@ module.exports = {
 
 			await interaction.reply({
 				content: '👋 Desconectado do canal de voz.',
-				ephemeral: true,
+				flags: 1 << 6,
 			})
 		} catch (error) {
 			console.error('Erro ao desconectar do canal de voz:', error)
 			await interaction.reply({
 				content: '❌ Erro ao desconectar do canal de voz.',
-				ephemeral: true,
+				flags: 1 << 6,
 			})
 		}
 	},

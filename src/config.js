@@ -33,7 +33,7 @@ module.exports = {
 
 	// Configurações de arquivo
 	files: {
-		transcription: 'transcricoes/[data]_transcricao.txt',
+		transcription: 'transcricoes/[data]_transcricao.json',
 		transcriptionDir: 'transcricoes',
 	},
 }

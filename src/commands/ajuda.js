@@ -22,7 +22,7 @@ module.exports = {
 
 		await interaction.reply({
 			embeds: [helpEmbed],
-			ephemeral: true,
+			flags: 1 << 6,
 		})
 	},
 }

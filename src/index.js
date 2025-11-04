@@ -79,7 +79,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 		if (!interaction.replied && !interaction.deferred) {
 			await interaction.reply({
 				content: '❌ Ocorreu um erro ao executar este comando!',
-				ephemeral: true,
+				flags: 1 << 6,
 			})
 		}
 	}
@@ -95,16 +95,39 @@ client.on('speech', async (message) => {
 
 		const now = new Date()
 		const timestamp = now.toISOString()
-		const text = `[${timestamp}] ${message.author.username}: ${message.content}\n`
 
-		console.log(`✍️ Nova transcrição: ${text}`)
+		// Obtém o membro para pegar o apelido
+		const member = await message.guild.members.fetch(message.author.id)
+		const autorNome = member.nickname || message.author.username
+
+		// Dados da transcrição em formato estruturado
+		const transcriptionEntry = {
+			timestamp: timestamp,
+			autor: autorNome,
+			autorId: message.author.id,
+			conteudo: message.content,
+		}
+
+		console.log(`✍️ Nova transcrição: [${timestamp}] ${autorNome}: ${message.content}`)
 
 		// Cria o diretório de transcrições se não existir
 		const dir = path.dirname(session.fileName)
 		await fs.mkdir(dir, { recursive: true })
 
-		// Salva a transcrição no arquivo da sessão
-		await fs.appendFile(session.fileName, text)
+		// Lê o arquivo existente ou cria um novo array
+		let transcriptions = []
+		try {
+			const fileContent = await fs.readFile(session.fileName, 'utf-8')
+			transcriptions = JSON.parse(fileContent)
+		} catch {
+			// Arquivo não existe ou está vazio, começar array novo
+		}
+
+		// Adiciona a nova transcrição
+		transcriptions.push(transcriptionEntry)
+
+		// Salva as transcrições no arquivo em formato JSON
+		await fs.writeFile(session.fileName, JSON.stringify(transcriptions, null, 2))
 	} catch (error) {
 		console.error('❌ Erro ao processar transcrição:', error)
 	}
@@ -245,6 +268,15 @@ async function initializeBot() {
 // Tratamento de erros não capturados
 process.on('unhandledRejection', (error) => {
 	console.error('❌ Erro não tratado:', error)
+})
+
+// Tratamento de AudioReceiveStream errors
+process.on('uncaughtException', (error) => {
+	if (error.message.includes('compressed data passed is corrupted')) {
+		console.warn('⚠️ Aviso: Dados de áudio corrompidos recebidos. Ignorando...')
+	} else {
+		console.error('❌ Erro não capturado:', error)
+	}
 })
 
 // Inicia o bot
