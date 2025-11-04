@@ -2,8 +2,7 @@
 
 echo "🔄 Reiniciando o INBot..."
 
-# Tenta com docker compose primeiro, depois docker-compose
-if docker compose restart 2>/dev/null || docker-compose restart 2>/dev/null; then
+if docker compose restart; then
     echo "✅ Bot reiniciado com sucesso!"
 else
     echo "❌ Erro ao reiniciar o bot!"

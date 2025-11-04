@@ -20,20 +20,20 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Verifica se o Docker Compose está instalado
-if ! command -v docker compose &> /dev/null && ! command -v docker-compose &> /dev/null; then
-    echo "❌ Erro: Docker Compose não está instalado!"
-    echo "Instale o Docker Compose: https://docs.docker.com/compose/install/"
+if ! command -v docker &> /dev/null; then
+    echo "❌ Erro: Docker não está instalado!"
+    echo "Instale o Docker: https://docs.docker.com/get-docker/"
     exit 1
 fi
 
 # Para o container antigo se existir
 echo "🛑 Parando containers antigos..."
-docker compose down 2>/dev/null || docker-compose down 2>/dev/null
+docker compose down 2>/dev/null
 
 # Reconstrói a imagem
 echo ""
 echo "🔨 Construindo a imagem Docker..."
-if ! docker compose build || ! docker-compose build; then
+if ! docker compose build; then
     echo ""
     echo "❌ Erro ao construir a imagem!"
     exit 1
@@ -42,7 +42,7 @@ fi
 # Inicia o container
 echo ""
 echo "🚀 Iniciando o bot..."
-if docker compose up -d || docker-compose up -d; then
+if docker compose up -d; then
     echo ""
     echo "✅ Deploy concluído com sucesso!"
     echo ""
